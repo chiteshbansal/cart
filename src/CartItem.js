@@ -10,10 +10,14 @@ class CartItem extends React.Component{
 			img:""
 		}
 
+		
+
 		//this.increaseQty = this.increaseQty.bind(this);
 		// we can even bind the function when the constuctor is called
 		// another solution is that we can use arrow functions
 	}
+
+
 	increaseQty=()=>{
 		
 		 // react give us an inbuilt method to rerender state once any 
@@ -23,7 +27,11 @@ class CartItem extends React.Component{
 
 		 this.setState({
 		 	qty:this.state.qty+1
+		 },()=>{
+		 	console.log("this.state",this.state);
 		 })
+
+		 
 
 		 // set state form2 - if previous state is req.
 		 // we can use this
@@ -40,7 +48,7 @@ class CartItem extends React.Component{
 				qty:this.state.qty-1
 			})
 	}
-	render(){
+	render(){		
 		const {price,title,qty}=this.state;
 		return (
 			<div className='cart-item'>
