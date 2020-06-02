@@ -1,29 +1,11 @@
 import React from 'react';
 
 class CartItem extends React.Component{
-	constructor(){
-		super();
-		this.state={
-			price:999,
-			title:"Phone",
-			qty:1,
-			img:""
-		}
-
-		
-
-		//this.increaseQty = this.increaseQty.bind(this);
-		// we can even bind the function when the constuctor is called
-		// another solution is that we can use arrow functions
-	}
+	
 
 
 	increaseQty=()=>{
 		
-		 // react give us an inbuilt method to rerender state once any 
-		 // changes are made to it
-
-		 // setState form 1
 
 		 this.setState({
 		 	qty:this.state.qty+1
@@ -31,15 +13,6 @@ class CartItem extends React.Component{
 		 	console.log("this.state",this.state);
 		 })
 
-		 
-
-		 // set state form2 - if previous state is req.
-		 // we can use this
-		 // this.setState((prevState)=>{
-		 // 	return {
-		 // 		qty:prevState.qty+1
-		 // 	}
-		 // })
 	}
 
 	decreaseQty = ()=>{
@@ -48,8 +21,9 @@ class CartItem extends React.Component{
 				qty:this.state.qty-1
 			})
 	}
-	render(){		
-		const {price,title,qty}=this.state;
+	render(){	
+		console.log("this.props",this.props);	
+		const {price,title,qty}=this.props.product;
 		return (
 			<div className='cart-item'>
 				<div className="left-block">
@@ -63,10 +37,7 @@ class CartItem extends React.Component{
 					<img alt = "increase" 
 					className="action-icons"
 					 src="https://image.flaticon.com/icons/svg/864/864378.svg"
-					 onClick={this.increaseQty}//as this depends on
-					 // from which context hte funciton is called so 
-					 // when react internally called the function
-					 // then we get this as undefined so we need to bind the function 
+					 onClick={this.increaseQty}
 					 	/>
 					<img alt = "decrease"
 					 className="action-icons" 
