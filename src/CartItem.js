@@ -15,7 +15,30 @@ class CartItem extends React.Component{
 		// another solution is that we can use arrow functions
 	}
 	increaseQty=()=>{
-		console.log(this.state);
+		
+		 // react give us an inbuilt method to rerender state once any 
+		 // changes are made to it
+
+		 // setState form 1
+
+		 this.setState({
+		 	qty:this.state.qty+1
+		 })
+
+		 // set state form2 - if previous state is req.
+		 // we can use this
+		 // this.setState((prevState)=>{
+		 // 	return {
+		 // 		qty:prevState.qty+1
+		 // 	}
+		 // })
+	}
+
+	decreaseQty = ()=>{
+		if(this.state.qty>0)
+			this.setState({
+				qty:this.state.qty-1
+			})
 	}
 	render(){
 		const {price,title,qty}=this.state;
@@ -40,6 +63,7 @@ class CartItem extends React.Component{
 					<img alt = "decrease"
 					 className="action-icons" 
 					 src="https://image.flaticon.com/icons/svg/864/864373.svg"
+					 onClick={this.decreaseQty}
 					 />
 					<img alt = "delete"
 					 className="action-icons"
