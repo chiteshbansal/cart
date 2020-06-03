@@ -16,6 +16,10 @@ class App extends React.Component{
 	}	
 
 	componentDidMount(){
+
+		//We can also added products directly 
+		// or we can also use the snapshot event handler
+
 		// firebase
 		//  .firestore()
 		//  .collection('products')
@@ -40,6 +44,9 @@ class App extends React.Component{
 		//  	})
 		//  })
 
+		// adding event handle for the firebase
+		// any update in the data at firestore 
+		// will trigger this function
 		firebase
 		 .firestore()
 		 .collection('products')
@@ -115,11 +122,28 @@ class App extends React.Component{
 		return total;
 	}
 
+	// adding products to the firebase
+	addProduct = () => {
+		firebase
+		 .firestore()
+		 .collection('products')
+		 .add({
+		 	img:'',
+		 	qty:3,
+		 	price:900,
+		 	title:"tv"
+		 })
+		 .then((docRef)=>{
+		 	console.log("Product  is added: ",docRef);
+		 })
+	}
+
 	render(){
 		const {products,Loading}=this.state;
 		return (
 			<div className="App">
 				<Navbar count ={this.getProductCount()}/>
+				<button onClick={this.addProduct} style={{padding:10,fontWeigth:'bold'}}>Add a product</button>
 			  	<Cart 
 			  		products={products}
 			  		onIncreaseQty={this.handleIncreaseQty}
