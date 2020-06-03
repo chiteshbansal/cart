@@ -1,26 +1,7 @@
 import React from 'react';
 
 class CartItem extends React.Component{
-	
 
-
-	increaseQty=()=>{
-		
-
-		 this.setState({
-		 	qty:this.state.qty+1
-		 },()=>{
-		 	console.log("this.state",this.state);
-		 })
-
-	}
-
-	decreaseQty = ()=>{
-		if(this.state.qty>0)
-			this.setState({
-				qty:this.state.qty-1
-			})
-	}
 	render(){	
 		console.log("this.props",this.props);	
 		const {price,title,qty}=this.props.product;
@@ -34,19 +15,20 @@ class CartItem extends React.Component{
 					<div style={{color:'#777'}}>Rs {price}</div>
 					<div style={{color:"#777"}}>Qty:{qty}</div>
 					<div className="cart-item-actions">
+
 					<img alt = "increase" 
-					className="action-icons"
-					 src="https://image.flaticon.com/icons/svg/864/864378.svg"
-					 onClick={this.increaseQty}
+						className="action-icons"
+						 src="https://image.flaticon.com/icons/svg/864/864378.svg"
+						 onClick={()=>{this.props.onIncreaseQty(this.props.product)}}
 					 	/>
 					<img alt = "decrease"
-					 className="action-icons" 
-					 src="https://image.flaticon.com/icons/svg/864/864373.svg"
-					 onClick={this.decreaseQty}
+						 className="action-icons" 
+						 src="https://image.flaticon.com/icons/svg/864/864373.svg"
+						 onClick={()=>{this.props.onDecreaseQty(this.props.product)}}
 					 />
 					<img alt = "delete"
-					 className="action-icons"
-					 src="https://image.flaticon.com/icons/svg/2089/2089743.svg"
+						 className="action-icons"
+						 src="https://image.flaticon.com/icons/svg/2089/2089743.svg"
 					 />
 					</div>
 				</div>
