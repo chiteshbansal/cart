@@ -2,38 +2,63 @@ import React from 'react';
 import CartItem from "./CartItem";
 import Cart from "./Cart";
 import Navbar from "./Navbar";
+import * as firebase from 'firebase';
+
 
 class App extends React.Component{
 
 	constructor(){
 		super();
 		this.state={
-		products:[
-			{
-				price:999,
-				title:"Watch",
-				qty:1,
-				img:"https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80",
-				productId:1
-			},
-			{
-				price:9949,
-				title:"Shoes",
-				qty:1,
-				img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-				productId:2
-			},
-			{
-				price:99984,
-				title:"Laptop",
-				qty:1,
-				img:"https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80",
-				productId:3
-			}
-		
-		]
+		products:[],
+		Loading:true
 		}		
 	}	
+
+	componentDidMount(){
+		// firebase
+		//  .firestore()
+		//  .collection('products')
+		//  .get()
+		//  .then((snapShot)=>{
+		//  	console.log(snapShot);
+
+		//  	snapShot.docs.map((doc)=>{
+		//  		console.log(doc.data());
+		//  	})
+
+		//  	const products = snapShot.docs.map((doc)=>{
+
+		//  		const data = doc.data();
+		//  		data['productId']=doc.id;
+		//  		return data;
+		//  	})
+
+		//  	this.setState({
+		//  		products:products,
+		//  		Loading:false
+		//  	})
+		//  })
+
+		firebase
+		 .firestore()
+		 .collection('products')
+		 .onSnapshot((snapShot)=>{
+
+		 	const products = snapShot.docs.map((doc)=>{
+
+		 		const data = doc.data();
+		 		data['productId']=doc.id;
+		 		return data;
+		 	})
+
+		 	this.setState({
+		 		products:products,
+		 		Loading:false
+		 	})
+		 })
+
+	}
 
 	handleIncreaseQty=(product)=>{
 			console.log('hey please increase the qty of ',product);
@@ -91,7 +116,7 @@ class App extends React.Component{
 	}
 
 	render(){
-		const {products}=this.state;
+		const {products,Loading}=this.state;
 		return (
 			<div className="App">
 				<Navbar count ={this.getProductCount()}/>
@@ -101,6 +126,7 @@ class App extends React.Component{
 					onDecreaseQty={this.handleDecreaseQty}
 					onDelete = {this.handleDelete}
 			  	/>
+			  	{Loading && <h1>Loading Products ...</h1>}
 			  	<div style={styles.CartTotal}>Total:{this.getCartTotal()}</div>
 			</div>
 		);
